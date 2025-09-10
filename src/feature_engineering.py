@@ -50,8 +50,7 @@ def extract_title(df):
 
         'Col': 'Official', 'Major': 'Official', 'Rev': 'Official',
         'Jonkheer': 'Rare', 'Don': 'Rare', 'Dona': 'Rare',
-        'Sir': 'Rare', 'Lady': 'Rare', 'Countess': 'Rare'
-
+        'Sir': 'Rare', 'Lady': 'Rare', 'Countess': 'Rare',
         'Col': 'Official', 'Major': 'Official', 'Dr': 'Official',
         'Rev': 'Official', 'Jonkheer': 'Rare', 'Don': 'Rare',
         'Dona': 'Rare', 'Sir': 'Rare', 'Lady': 'Rare', 'Countess': 'Rare'
