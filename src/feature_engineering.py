@@ -47,9 +47,15 @@ def extract_title(df):
     df['Title'] = df['Name'].apply(get_title)
     title_mapping = {
         'Mlle': 'Miss', 'Ms': 'Miss', 'Mme': 'Mrs', 'Capt': 'Official',
+
+        'Col': 'Official', 'Major': 'Official', 'Rev': 'Official',
+        'Jonkheer': 'Rare', 'Don': 'Rare', 'Dona': 'Rare',
+        'Sir': 'Rare', 'Lady': 'Rare', 'Countess': 'Rare'
+
         'Col': 'Official', 'Major': 'Official', 'Dr': 'Official',
         'Rev': 'Official', 'Jonkheer': 'Rare', 'Don': 'Rare',
         'Dona': 'Rare', 'Sir': 'Rare', 'Lady': 'Rare', 'Countess': 'Rare'
+
     }
     df['Title'] = df['Title'].replace(title_mapping)
     return df
@@ -79,6 +85,33 @@ def add_ticket_features(df):
     """
     df['Ticket_Prefix'] = df['Ticket'].apply(lambda x: x.split()[0] if not x.split()[0].isdigit() else 'NUM')
     df['Ticket_Prefix'] = df['Ticket_Prefix'].str.replace(r'[\\./]', '', regex=True)
+
+    df['Ticket_Frequency'] = df.groupby('Ticket')['Ticket'].transform('count')
+    return df
+
+def add_age_bins(df):
+    """Adds age bins to the dataframe.
+
+    Args:
+        df (pd.DataFrame): The dataframe to process.
+
+    Returns:
+        pd.DataFrame: The dataframe with a new 'AgeBin' column.
+    """
+    df['AgeBin'] = pd.cut(df['Age'], bins=[0, 12, 20, 40, 120], labels=['Child', 'Teenage', 'Adult', 'Elder'])
+    return df
+
+def add_fare_bins(df):
+    """Adds fare bins to the dataframe.
+
+    Args:
+        df (pd.DataFrame): The dataframe to process.
+
+    Returns:
+        pd.DataFrame: The dataframe with a new 'FareBin' column.
+    """
+    df['FareBin'] = pd.qcut(df['Fare'], 4, labels=['Very_Low', 'Low', 'High', 'Very_High'])
+
     return df
 
 def add_interaction_features(df):
@@ -134,6 +167,10 @@ def engineer_features(df):
     df = add_family_features(df)
     df = add_cabin_features(df)
     df = add_ticket_features(df)
+
+    df = add_age_bins(df)
+    df = add_fare_bins(df)
+
     df = add_interaction_features(df)
     df = drop_original_columns(df)
     df = encode_categoricals(df)
