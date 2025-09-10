@@ -1,1 +1,60 @@
-Titanic 
+# Titanic Survival Prediction
+
+This project is a classic data science challenge to predict the survival of passengers on the Titanic. The goal is to build a model that can predict whether a passenger survived or not based on features like age, sex, class, etc.
+
+This repository contains both the exploratory analysis notebooks and a refactored, documented data processing and model training pipeline.
+
+## Project Structure
+
+The project is structured as follows:
+
+- `data/`: Contains the raw and processed data.
+  - `raw/`: The original `train.csv` and `test.csv` files.
+  - `processed/`: The output of the data processing pipeline, including the final submission file.
+- `notebooks/`: Contains the original Jupyter notebooks used for exploratory data analysis and initial modeling. These are useful for understanding the step-by-step process of data exploration and feature discovery.
+- `src/`: Contains the Python scripts for the refactored and documented data processing and model training pipeline.
+  - `data_preprocessing.py`: Functions for loading and cleaning the data.
+  - `feature_engineering.py`: Functions for creating new features.
+  - `model_training.py`: Functions for training the CatBoost model, tuning hyperparameters, and generating a submission file.
+  - `deep_learning_model.py`: Functions for building, training, and evaluating a neural network using TensorFlow and Keras.
+  - `main.py`: The main script to run the entire pipeline.
+- `requirements.txt`: The Python dependencies for this project.
+
+## Setup
+
+To set up the environment, you will need to install the required Python packages. It is recommended to use a virtual environment.
+
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+
+### Running the Pipeline
+
+To run the entire data processing and model training pipeline, simply execute the `main.py` script from the root of the repository. You can choose to run either the CatBoost model or the deep learning model using the `--model` argument.
+
+#### CatBoost Model (default)
+
+```bash
+python src/main.py --model catboost
+```
+
+#### Deep Learning Model
+
+```bash
+python src/main.py --model dl
+```
+
+This will:
+1. Load the raw data from `data/raw`.
+2. Perform data cleaning and preprocessing.
+3. Engineer new features.
+4. Train the selected model.
+5. Generate a submission file named `submission_catboost.csv` or `submission_dl.csv` in the `data/processed` directory.
+
+After running the pipeline, the submission file will be ready to be submitted to the Kaggle competition.
+
+### Exploratory Notebooks
+
+The `notebooks` directory contains the original Jupyter notebooks, which provide a detailed, step-by-step walkthrough of the data analysis process. These are a valuable resource for understanding the data and the feature engineering decisions.
